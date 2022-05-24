@@ -1,6 +1,10 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from '@fortawesome/fontawesome-free-regular'
 import Helmet from "react-helmet";
 
 import ToolBar from "../widget/Toolbar";
+import { faUsers } from "@fortawesome/fontawesome-free-solid";
+import Footer from "../widget/Footer";
 
 function Head() {
     return (
@@ -63,7 +67,7 @@ function SettingBar() {
                                     <input id="txt_date" type="text" className="form-control outline-success" data-target="#cb_date_picker" />
                                     <span className="input-group-append" data-target="#cb_date_picker" data-toggle="datetimepicker">
                                         <span className="input-group-text bg-white d-block outline-success">
-                                            <i className="fa-regular fa-calendar" />
+                                            <i className="fa fa-regular fa-calendar"></i>
                                         </span>
                                     </span>
                                 </div>
@@ -74,7 +78,8 @@ function SettingBar() {
                                     <input id="txt_time" type="text" className="form-control outline-success" data-target="#cb_time_picker" />
                                     <span className="input-group-append">
                                         <span className="input-group-text bg-white d-block outline-success" data-target="#cb_time_picker" data-toggle="datetimepicker">
-                                            <i className="fa-regular fa-clock" />
+                                            {/* <FontAwesomeIcon icon={"fa-light fa-clock"} /> */}
+                                            <FontAwesomeIcon icon={faClock} />
                                         </span>
                                     </span>
                                 </div>
@@ -85,7 +90,7 @@ function SettingBar() {
                                     <input id="txt_jumlah_penumpang" type="number" max={6} min={0} className="form-control outline-success" />
                                     <span className="input-group-append">
                                         <span className="input-group-text bg-white d-block outline-success">
-                                            <i className="fa-solid fa-user-group" />
+                                            <FontAwesomeIcon icon={faUsers} />
                                         </span>
                                     </span>
                                 </div>
@@ -109,6 +114,7 @@ function Sewa() {
             <ToolBar />
             <Header />
             <SettingBar />
+            <Footer />
         </div>
     )
 }

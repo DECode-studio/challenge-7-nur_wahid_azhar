@@ -6,6 +6,9 @@ import {
   Link
 } from "react-router-dom";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheckSquare, faCoffee } from '@fortawesome/fontawesome-free-solid'
+
 import Dashboard from './pages/Dashboard';
 import Sewa from './pages/Sewa';
 

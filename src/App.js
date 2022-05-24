@@ -5,8 +5,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Dashboard from './Dashboard';
-import Sewa from './Sewa';
+
+import Dashboard from './pages/Dashboard';
+import Sewa from './pages/Sewa';
 
 function App() {
   return (

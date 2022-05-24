@@ -6,14 +6,14 @@ import {
   Link
 } from "react-router-dom";
 import Dashboard from './Dashboard';
-import List from './List';
+import Sewa from './Sewa';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
-        <Route exact path="/list" element={<List />} />
+        <Route exact path="/sewa" element={<Sewa />} />
       </Routes>
     </Router>
   );

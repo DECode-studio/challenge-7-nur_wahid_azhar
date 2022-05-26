@@ -78,7 +78,6 @@ function SettingBar() {
                                     <input id="txt_time" type="text" className="form-control outline-success" data-target="#cb_time_picker" />
                                     <span className="input-group-append">
                                         <span className="input-group-text bg-white d-block outline-success" data-target="#cb_time_picker" data-toggle="datetimepicker">
-                                            {/* <FontAwesomeIcon icon={"fa-light fa-clock"} /> */}
                                             <FontAwesomeIcon icon={faClock} />
                                         </span>
                                     </span>
@@ -87,7 +86,7 @@ function SettingBar() {
                             <div className="col">
                                 <label htmlFor="txt_jumlah_penumpang" className="form-label">Jumlah Penumpang (optional)</label>
                                 <div className="input-group date">
-                                    <input id="txt_jumlah_penumpang" type="number" max={6} min={0} className="form-control outline-success" />
+                                    <input id="txt_jumlah_penumpang" type="number" max={6} min={0} className="form-control outline-success" minLength={0} />
                                     <span className="input-group-append">
                                         <span className="input-group-text bg-white d-block outline-success">
                                             <FontAwesomeIcon icon={faUsers} />
@@ -107,13 +106,74 @@ function SettingBar() {
     )
 }
 
+function Content({ carImage, carType, carRent, carDescription, carCapacity, carTransmission, carYear }) {
+    return (
+        <div id="data_container" className="container mt-5" style={{ display: 'none' }}>
+            <div id="row_data" className="d-flex justify-content-center flex-wrap">
+                <div id="card_mobil" className="card ms-3 mt-3" style={{ width: '18rem' }}>
+                    <div className="card-body position-relative" style={{ height: 530 }}>
+                        <p>
+                            <img id="img_card" src={carImage} height="160px" width="255px" />
+                        </p>
+                        <h6 id="txt_nama_mobil">
+                            {carType}
+                        </h6>
+                        <h5 id="txt_harga_mobil" className="card-title">{carRent} / hari</h5>
+                        <p id="txt_deskripsi_mobil" className="card-text">{carDescription}
+                        </p>
+                        <div className="d-flex align-items-center mb-2">
+                            <div>
+                                <i className="fa-solid fa-user-group" />
+                            </div>
+                            <div id="txt_keterangan_penumpang" className="ms-3">
+                                {carCapacity} Orang
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center mb-2">
+                            <div>
+                                <i className="fa-solid fa-gear" />
+                            </div>
+                            <div id="txt_keterangan_setting" className="ms-3">
+                                {carTransmission}
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center">
+                            <div>
+                                <i className="fa-solid fa-calendar" />
+                            </div>
+                            <div id="txt_keterangan_waktu" className="ms-3">
+                                Tahun {carYear}
+                            </div>
+                        </div>
+                        <div style={{ position: 'absolute', bottom: 15, width: '89%' }}>
+                            <a className="btn btn-success p-2" style={{ width: '100%' }}>Pilih Mobil</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div >
+        </div >
+    )
+}
+
 function Sewa() {
+    var carImage
+    var carType
+    var carRent
+    var carDescription
+    var carCapacity
+    var carTransmission
+    var carYear
+
     return (
         <div>
             <Head />
             <ToolBar />
             <Header />
             <SettingBar />
+            {/* <Content data={carImage, carType, carRent, carDescription, carCapacity, carTransmission, carYear} /> */}
             <Footer />
         </div>
     )

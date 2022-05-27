@@ -46,7 +46,13 @@ const Header = () => {
     )
 }
 
-const SettingBar = (setDriver, setDate, setTime, setPassenger) => {
+const SettingBar = ({ setDriver, setDate, setTime, setPassenger }) => {
+
+    const [driver, setDataDriver] = useState('');
+    const [date, setDataDate] = useState('');
+    const [time, setDataTime] = useState('');
+    const [passenger, setDataPassenger] = useState(0);
+
     return (
         <div className="container">
             <div className="card p-4 br-10" style={{ marginTop: '-60px' }}>
@@ -57,12 +63,12 @@ const SettingBar = (setDriver, setDate, setTime, setPassenger) => {
                                 <label htmlFor="cb_tipe_driver" className="form-label">Tipe Driver</label>
                                 <div className="dropdown">
                                     <a className="btn btn-outline-success dropdown-toggle" role="button" id="cb_tipe_driver" data-bs-toggle="dropdown">
-                                        Pilih Tipe Driver
+                                        {driver == "" ? "Pilih Tipe Driver" : driver == 'driver' ? 'Dengan Supir' : 'Tanpa Supir (Lepas Kunci)'}
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="cb_tipe_driver">
-                                        <li><a id="index_supir" className="dropdown-item" >Dengan
-                                            Sopir</a></li>
-                                        <li><a id="index_tanpa_supir" className="dropdown-item" >Tanpa Sopir (Lepas Kunci)</a>
+                                        <li><a id="index_supir" className="dropdown-item" onClick={() => setDataDriver('driver')}>Dengan
+                                            Supir</a></li>
+                                        <li><a id="index_tanpa_supir" className="dropdown-item" onClick={() => setDataDriver('no-driver')}>Tanpa Supir (Lepas Kunci)</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -70,26 +76,43 @@ const SettingBar = (setDriver, setDate, setTime, setPassenger) => {
                             <div className="col align-self-end">
                                 <label htmlFor="cb_date_picker" className="form-label">Tanggal</label>
                                 <div className="input-group date" id="cb_date_picker" data-target-input="nearest">
-                                    <input id="txt_date" type="date" className="form-control outline-success" data-target="#cb_date_picker" />
+                                    <input id="txt_date" type="date" className="form-control outline-success" data-target="#cb_date_picker" onChange={(e) => setDataDate(e.target.value)} />
                                 </div>
                             </div>
                             <div className="col align-self-end">
                                 <label htmlFor="cb_time_picker" className="form-label">Waktu Jemput / Ambil</label>
                                 <div className="input-group date" id="cb_time_picker" data-target-input="nearest">
-                                    <input id="txt_time" type="time" className="form-control outline-success" data-target="#cb_time_picker" />
+                                    <input id="txt_time" type="time" className="form-control outline-success" data-target="#cb_time_picker" onChange={(e) => setDataTime(e.target.value)} />
                                 </div>
                             </div>
                             <div className="col align-self-end">
                                 <label htmlFor="txt_jumlah_penumpang" className="form-label">Jumlah Penumpang (optional)</label>
                                 <div className="input-group date">
-                                    <input id="txt_jumlah_penumpang" type="number" max={6} min={0} className="form-control outline-success" minLength={0} />
+                                    <input id="txt_jumlah_penumpang" type="number" max={6} min={0} className="form-control outline-success" minLength={0} onChange={(e) => setDataPassenger(e.target.value)} />
                                     <span className="input-group-text bg-white d-block outline-success">
                                         <FontAwesomeIcon icon={faUsers} />
                                     </span>
                                 </div>
                             </div>
                             <div className="col-auto align-self-end mt-3">
-                                <button id="btn_cari_mobil" type="button" className="btn btn-success mt-32" >Cari Mobil</button>
+                                <button id="btn_cari_mobil" type="button" className="btn btn-success mt-32" onClick={() => {
+                                    if (driver == "" && date == "" && time == "" && passenger == 0) {
+                                        alert('data belum diatur')
+                                    } else if (driver == "") {
+                                        alert('tipe supir belum dipilih')
+                                    } else if (date == "") {
+                                        alert('tanggal belum diatur')
+                                    } else if (time == "") {
+                                        alert('waktu belum diatur')
+                                    } else if (passenger == 0) {
+                                        alert('jumla penumpang belum diatur')
+                                    } else {
+                                        setDriver(driver)
+                                        setDate(date)
+                                        setTime(time)
+                                        setPassenger(passenger)
+                                    }
+                                }}>Cari Mobil</button>
                             </div>
                         </div>
                     </fieldset>
@@ -147,14 +170,17 @@ const CarCard = ({ index, carImage, carType, carRent, carDescription, carCapacit
 
 const Content = ({ cars, showCard, driver, date, time, passenger }) => {
     return (
-        // carImage={car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year}
-        // style={{ display: 'none' }}
+
         <div id="data_container" className="container mt-5" {...showCard ? 'batu' : 'hidden'} >
             <div id="row_data" className="d-flex justify-content-center flex-wrap">
                 {
-                    cars.map((car, index) => (
-                        <CarCard key={index} index={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
-                    ))
+                    driver == "" && date == "" && time == "" && passenger == 0
+                        ? cars.filter((e) => e.available == true).map((car, index) => (
+                            <CarCard key={index} index={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
+                        ))
+                        : cars.filter((e) => e.available == true && e.capacity >= passenger).map((car, index) => (
+                            <CarCard key={index} index={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
+                        ))
                 }
 
             </div >
@@ -192,7 +218,7 @@ function Sewa() {
             <Head />
             <ToolBar />
             <Header />
-            <SettingBar setDriver={setDriver} setDate={setDate} setTime={setTime} setPassenger={setPassenger} />
+            <SettingBar setDriver={setDriver} setDate={setDate} setTime={setTime} setPassenger={setPassenger} driver={driver} date={date} time={time} passenger={passenger} />
             <Content cars={cars} driver={driver} date={date} time={time} passenger={passenger} />
             <Footer />
         </div>

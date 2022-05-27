@@ -125,12 +125,12 @@ const SettingBar = ({ setDriver, setDate, setTime, setPassenger }) => {
     )
 }
 
-const CarCard = ({ index, carImage, carType, carRent, carDescription, carCapacity, carTransmission, carYear }) => {
+const CarCard = ({ indx, carImage, carType, carRent, carDescription, carCapacity, carTransmission, carYear }) => {
     return (
         <div id="card_mobil" className="card ms-3 mt-3 br-10" style={{ width: '18rem' }}>
             <div className="card-body position-relative" style={{ height: 530 }}>
                 <p>
-                    <img id="img_card" src={require('../images/car' + (index < 9 ? "0" + (index + 1) : index + 1) + '.min.jpg')} height="160px" width="255px" className="br-10" />
+                    <img id="img_card" src={require('../images/car' + (indx < 9 ? "0" + (indx + 1) : indx + 1) + '.min.jpg')} height="160px" width="255px" className="br-10" />
                 </p>
                 <h6 id="txt_nama_mobil">
                     {carType}
@@ -178,10 +178,10 @@ const Content = ({ cars, showCard, driver, date, time, passenger }) => {
                 {
                     driver == "" && date == "" && time == "" && passenger == 0
                         ? cars.filter((e) => e.available == true).map((car, index) => (
-                            <CarCard key={index} index={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
+                            <CarCard key={index} indx={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
                         ))
                         : cars.filter((e) => e.available == true && e.capacity >= passenger).map((car, index) => (
-                            <CarCard key={index} index={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
+                            <CarCard key={index} indx={index} carImage={"." + car.image} carType={car.type} carRent={car.rentPerDay} carDescription={car.description} carCapacity={car.capacity} carTransmission={car.transmission} carYear={car.year} />
                         ))
                 }
 
@@ -189,6 +189,7 @@ const Content = ({ cars, showCard, driver, date, time, passenger }) => {
         </div >
     )
 }
+
 
 function Sewa() {
     const [cars, setCar] = useState([]);

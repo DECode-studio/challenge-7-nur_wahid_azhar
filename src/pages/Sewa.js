@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faClock } from '@fortawesome/fontawesome-free-regular'
 import Helmet from "react-helmet";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import ToolBar from "../widget/Toolbar";
 import { faCar, faMotorcycle, faScrewdriver, faToolbox, faUsers } from "@fortawesome/fontawesome-free-solid";
@@ -97,15 +99,15 @@ const SettingBar = ({ setDriver, setDate, setTime, setPassenger }) => {
                             <div className="col-auto align-self-end mt-3">
                                 <button id="btn_cari_mobil" type="button" className="btn btn-success mt-32" onClick={() => {
                                     if (driver == "" && date == "" && time == "" && passenger == 0) {
-                                        alert('data belum diatur')
+                                        toast.warn('data belum diatur')
                                     } else if (driver == "") {
-                                        alert('tipe supir belum dipilih')
+                                        toast.warn('tipe supir belum dipilih')
                                     } else if (date == "") {
-                                        alert('tanggal belum diatur')
+                                        toast.warn('tanggal belum diatur')
                                     } else if (time == "") {
-                                        alert('waktu belum diatur')
+                                        toast.warn('waktu belum diatur')
                                     } else if (passenger == 0) {
-                                        alert('jumla penumpang belum diatur')
+                                        toast.warn('jumlah penumpang belum diatur')
                                     } else {
                                         setDriver(driver)
                                         setDate(date)
@@ -221,6 +223,18 @@ function Sewa() {
             <SettingBar setDriver={setDriver} setDate={setDate} setTime={setTime} setPassenger={setPassenger} driver={driver} date={date} time={time} passenger={passenger} />
             <Content cars={cars} driver={driver} date={date} time={time} passenger={passenger} />
             <Footer />
+            <ToastContainer
+                theme="dark"
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     )
 }
